@@ -6,7 +6,8 @@ function App() {
   const [operation, setOperation] = useState('+');
   const [secondNum, setSecondNum] = useState(0);
   const [result, setResult] = useState(0);
-  const [storedNum, setStoredNum] = useState(0);
+  const [storedNum, setStoredNum] = useState(5.9);
+  const [separators, setSeparators] = useState([false, false]) //First and Second pad
 
   const firstNumPressed = (event) => {
     const value = event.target.innerText;
@@ -14,12 +15,31 @@ function App() {
     if (value === 'Clear') {
       setFirstNum(0);
       setResult(0);
+      setSeparators([false, separators[1]]) // Not used
       return
     }
     // If recall, set First Num to be the Stored value
     else if (value === 'Recall') {
       setFirstNum(storedNum);
+
+      // Check if there is a separator already
+      if (String(storedNum).includes('.')) {
+        setSeparators([true, separators[1]]);
+      } else {
+        setSeparators([false, separators[1]]);
+      }
+
       return
+    }
+    // Adds Dot to the number. If first separator doesn't exist as well!.
+    // Return nothing if separator already used.
+    else if (value === 'Dot') {
+      if (separators[0] === false) {
+        setSeparators([true, separators[1]]) // used
+        setFirstNum(firstNum + '.');
+        return
+      }
+      else return
     }
 
     // If is Zero, update Zero to the new value
@@ -44,17 +64,35 @@ function App() {
     if (value === 'Clear') {
       setSecondNum(0);
       setResult(0);
+      setSeparators([separators[0], false]); // Not used
       return
     }
     // If recall, set Second Num to be the Stored value
     else if (value === 'Recall') {
-      console.log(`Called from Second Num, stored value is ${storedNum}`)
       setSecondNum(storedNum);
+
+      // Check if there is a separator already
+      if (String(storedNum).includes('.')) {
+        setSeparators([separators[0], true]);
+      } else {
+        setSeparators([separators[0], false]);
+      }
+
       return
+    }
+    // Adds Dot to the number. If second separator doesn't exist as well!.
+    // Return nothing if separator already used.
+    else if (value === 'Dot') {
+      if (separators[1] === false) {
+        setSeparators([separators[0], true]) // Used
+        setSecondNum(secondNum + '.');
+        return
+      }
+      else return
     }
 
     // If is Zero, update Zero to the new value
-    if (secondNum == 0) {
+    if (secondNum == '0') {
       setSecondNum(value);
       return // Don't continue
     }
@@ -100,6 +138,7 @@ function App() {
             <button onClick={firstNumPressed}>8</button>
             <button onClick={firstNumPressed}>9</button>
             <button onClick={firstNumPressed}>0</button>
+            <button onClick={firstNumPressed}>Dot</button>
             <button onClick={firstNumPressed}>Clear</button>
             <button onClick={firstNumPressed}>Recall</button>
           </div>
@@ -128,6 +167,7 @@ function App() {
             <button onClick={secondNumPressed}>8</button>
             <button onClick={secondNumPressed}>9</button>
             <button onClick={secondNumPressed}>0</button>
+            <button onClick={secondNumPressed}>Dot</button>
             <button onClick={secondNumPressed}>Clear</button>
             <button onClick={secondNumPressed}>Recall</button>
           </div>
