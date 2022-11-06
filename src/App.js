@@ -12,6 +12,7 @@ function App() {
 
     if (value === 'Clear') {
       setFirstNum(0);
+      setResult(0);
       return
     }
 
@@ -29,16 +30,26 @@ function App() {
 
     if (value === 'Clear') {
       setSecondNum(0);
+      setResult(0);
       return
     }
 
     setSecondNum(value);
   }
 
-  const equalButtonPressed = (event) => {
-    const finalValue = eval(`${firstNum} ${operation} ${secondNum}`);
+  const equalButtonPressed = () => {
+    // If division, change it to the char the computer understands (/)
+    if (operation === '÷') {
+      const finalValue = eval(`${firstNum} / ${secondNum}`);
+      setResult(finalValue);
 
-    setResult(finalValue)
+      return
+    }
+    
+    // If not division, just use EVAL.
+    const finalValue = eval(`${firstNum} ${operation} ${secondNum}`);
+    
+    setResult(finalValue);
   }
 
   return (
