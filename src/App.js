@@ -16,7 +16,14 @@ function App() {
       return
     }
 
-    setFirstNum(value);
+    // If is Zero, update Zero to the new value
+    if (firstNum === 0) {
+      setFirstNum(value);
+      return // Don't continue
+    }
+
+    // If not zero, append the digit to the end.
+    setFirstNum(String(firstNum + value));
   }
 
   const signButtonPressed = (event) => {
@@ -34,7 +41,14 @@ function App() {
       return
     }
 
-    setSecondNum(value);
+    // If is Zero, update Zero to the new value
+    if (secondNum === 0) {
+      setSecondNum(value);
+      return // Don't continue
+    }
+
+    // If not zero, append the digit to the end.
+    setSecondNum(String(secondNum + value));
   }
 
   const equalButtonPressed = () => {
@@ -45,7 +59,7 @@ function App() {
 
       return
     }
-    
+
     // If not division, just use EVAL.
     const finalValue = eval(`${firstNum} ${operation} ${secondNum}`);
     
