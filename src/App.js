@@ -1,27 +1,50 @@
+import { useState } from "react";
 import "./App.css"
 
 function App() {
-  
+  const [firstNum, setFirstNum] = useState(0);
+  const [operation, setOperation] = useState('+');
+  const [secondNum, setSecondNum] = useState(0);
+  const [result, setResult] = useState(0);
+
   const firstNumPressed = (event) => {
-    console.log(event.target.innerText);
+    const value = event.target.innerText;
+
+    if (value === 'Clear') {
+      setFirstNum(0);
+      return
+    }
+
+    setFirstNum(value);
   }
 
   const signButtonPressed = (event) => {
-    console.log(event.target.innerText);
+    const value = event.target.innerText;
+
+    setOperation(value);
   }
 
   const secondNumPressed = (event) => {
-    console.log(event.target.innerText);
+    const value = event.target.innerText;
+
+    if (value === 'Clear') {
+      setSecondNum(0);
+      return
+    }
+
+    setSecondNum(value);
   }
 
   const equalButtonPressed = (event) => {
-    console.log(event.target.innerText)
+    const finalValue = eval(`${firstNum} ${operation} ${secondNum}`);
+
+    setResult(finalValue)
   }
 
   return (
     <div className="calculator">
         <div className="panel">
-          <p>0</p>
+          <p>{firstNum}</p>
           <div className="numbers">
             <button onClick={firstNumPressed}>1</button>
             <button onClick={firstNumPressed}>2</button>
@@ -38,7 +61,7 @@ function App() {
         </div>
         
         <div className="panel">
-          <p>+</p>
+          <p>{operation}</p>
           <div className="numbers">
             <button onClick={signButtonPressed}>+</button>
             <button onClick={signButtonPressed}>-</button>
@@ -48,7 +71,7 @@ function App() {
         </div>
 
         <div className="panel">
-          <p>0</p>
+          <p>{secondNum}</p>
           <div className="numbers">
             <button onClick={secondNumPressed}>1</button>
             <button onClick={secondNumPressed}>2</button>
@@ -64,7 +87,7 @@ function App() {
           </div>
         </div>
         <div className="panel answer">
-          <p>0</p>
+          <p>{result}</p>
           <div>
             <button onClick={equalButtonPressed}>=</button>
           </div>
