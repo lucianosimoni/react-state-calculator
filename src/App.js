@@ -6,6 +6,7 @@ function App() {
   const [operation, setOperation] = useState('+');
   const [secondNum, setSecondNum] = useState(0);
   const [result, setResult] = useState(0);
+  const [storedNum, setStoredNum] = useState(0);
 
   const firstNumPressed = (event) => {
     const value = event.target.innerText;
@@ -13,6 +14,11 @@ function App() {
     if (value === 'Clear') {
       setFirstNum(0);
       setResult(0);
+      return
+    }
+    // If recall, set First Num to be the Stored value
+    else if (value === 'Recall') {
+      setFirstNum(storedNum);
       return
     }
 
@@ -38,6 +44,12 @@ function App() {
     if (value === 'Clear') {
       setSecondNum(0);
       setResult(0);
+      return
+    }
+    // If recall, set Second Num to be the Stored value
+    else if (value === 'Recall') {
+      console.log(`Called from Second Num, stored value is ${storedNum}`)
+      setSecondNum(storedNum);
       return
     }
 
@@ -66,6 +78,13 @@ function App() {
     setResult(finalValue);
   }
 
+  const storeButtonPressed = () => {
+    // Store the RESULT variable on the StoredNum
+    console.log(`Stored value ${result}`)
+
+    setStoredNum(result);
+  }
+
   return (
     <div className="calculator">
         <div className="panel">
@@ -82,6 +101,7 @@ function App() {
             <button onClick={firstNumPressed}>9</button>
             <button onClick={firstNumPressed}>0</button>
             <button onClick={firstNumPressed}>Clear</button>
+            <button onClick={firstNumPressed}>Recall</button>
           </div>
         </div>
         
@@ -109,12 +129,15 @@ function App() {
             <button onClick={secondNumPressed}>9</button>
             <button onClick={secondNumPressed}>0</button>
             <button onClick={secondNumPressed}>Clear</button>
+            <button onClick={secondNumPressed}>Recall</button>
           </div>
         </div>
+
         <div className="panel answer">
           <p>{result}</p>
-          <div>
+          <div className="buttons">
             <button onClick={equalButtonPressed}>=</button>
+            <button onClick={storeButtonPressed}>Store</button>
           </div>
         </div>
     </div>
